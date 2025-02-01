@@ -117,16 +117,6 @@ function my_accounting_plugin_menu() {
         'my_accounting_plugin_add_product'
     );
 
-    // منوی ویرایش محصول (پنهان)
-    add_submenu_page(
-        'my-accounting-plugin', // اسلاگ منوی اصلی
-        'ویرایش محصول',
-        'ویرایش محصول',
-        'manage_options',
-        'my-accounting-plugin-edit-product',
-        'my_accounting_plugin_edit_product'
-    );
-
     // منوی مدیریت گروه‌ها
     add_submenu_page(
         'my-accounting-plugin',
@@ -154,11 +144,6 @@ function my_accounting_plugin_add_product() {
     include plugin_dir_path(__FILE__) . 'templates/add-product.php';
 }
 
-// نمایش صفحه ویرایش محصول
-function my_accounting_plugin_edit_product() {
-    include plugin_dir_path(__FILE__) . 'templates/edit-product.php';
-}
-
 // نمایش صفحه مدیریت گروه‌ها
 function my_accounting_plugin_manage_groups() {
     include plugin_dir_path(__FILE__) . 'templates/manage-groups.php';
@@ -170,6 +155,7 @@ function my_accounting_plugin_enqueue_scripts() {
     wp_enqueue_script('my-accounting-plugin-script', plugins_url('assets/js/script.js', __FILE__), array('jquery'), null, true);
 }
 add_action('admin_enqueue_scripts', 'my_accounting_plugin_enqueue_scripts');
+
 // افزودن تابع پردازش درخواست AJAX
 add_action('wp_ajax_get_product', 'handle_get_product');
 add_action('wp_ajax_nopriv_get_product', 'handle_get_product'); // اگر نیاز به دسترسی برای کاربران غیر لاگین دارید
