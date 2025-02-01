@@ -9,72 +9,52 @@ class Products {
     }
 
     public function add_product($data) {
-        // افزودن محصول به دیتابیس
+        global $wpdb;
+        return $wpdb->insert("{$wpdb->prefix}products", $data);
     }
 
     public function edit_product($id, $data) {
-        // ویرایش محصول در دیتابیس
+        global $wpdb;
+        return $wpdb->update(
+            "{$wpdb->prefix}products",
+            $data,
+            array('id' => $id)
+        );
     }
 
     public function delete_product($id) {
-        // حذف محصول از دیتابیس
+        global $wpdb;
+        return $wpdb->delete("{$wpdb->prefix}products", array('id' => $id));
     }
 
     public function copy_product($id) {
-        // کپی محصول در دیتابیس
+        global $wpdb;
+        $product = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}products WHERE id = $id", ARRAY_A);
+        if ($product) {
+            unset($product['id']);
+            return $wpdb->insert("{$wpdb->prefix}products", $product);
+        }
+        return false;
     }
 
     public function change_price($id, $new_price) {
-        // تغییر قیمت محصول
+        global $wpdb;
+        return $wpdb->update(
+            "{$wpdb->prefix}products",
+            array('sale_price' => $new_price),
+            array('id' => $id)
+        );
     }
 
     public function get_products() {
-        // دریافت لیست محصولات از دیتابیس
+        global $wpdb;
+        return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}products", ARRAY_A);
     }
-    
-}
-// دریافت گروه‌های محصول از دیتابیس
-function get_product_groups() {
-    global $wpdb;
-    return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}product_groups", ARRAY_A);
+
+    public function get_product($id) {
+        global $wpdb;
+        return $wpdb->get_row("SELECT * FROM {$wpdb->prefix}products WHERE id = $id", ARRAY_A);
+    }
 }
 
-// دریافت زیرگروه‌های محصول از دیتابیس
-function get_product_subgroups() {
-    global $wpdb;
-    return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}product_subgroups", ARRAY_A);
-}
-
-// دریافت واحدها از دیتابیس
-function get_product_units() {
-    global $wpdb;
-    return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}product_units", ARRAY_A);
-}
-// ثبت گروه جدید
-function add_product_group($name) {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'product_groups';
-    $wpdb->insert(
-        $table_name,
-        array('name' => $name)
-    );
-}
-
-function add_product_subgroup($name) {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'product_subgroups';
-    $wpdb->insert(
-        $table_name,
-        array('name' => $name)
-    );
-}
-
-function add_product_unit($name) {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'product_units';
-    $wpdb->insert(
-        $table_name,
-        array('name' => $name)
-    );
-}
 new Products();
