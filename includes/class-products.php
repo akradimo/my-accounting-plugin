@@ -57,4 +57,8 @@ class Products {
     }
 }
 
+<<<<<<< Updated upstream
 new Products();
+=======
+new Products();
+>>>>>>> Stashed changes
