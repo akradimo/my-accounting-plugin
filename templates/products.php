@@ -183,7 +183,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit-edit-product']
     );
     echo "<p>محصول با موفقیت ویرایش شد.</p>";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
 =======
 }
 >>>>>>> Stashed changes
